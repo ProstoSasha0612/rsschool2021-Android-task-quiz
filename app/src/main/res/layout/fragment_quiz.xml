@@ -88,7 +88,7 @@
                     android:id="@+id/option_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Option 1" />
+                    android:text="Option 1" />
 
                 <RadioButton
                     android:id="@+id/option_two"

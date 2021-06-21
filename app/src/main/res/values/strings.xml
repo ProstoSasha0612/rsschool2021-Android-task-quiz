@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">Quiz</string>
+    <string name="question1">2 + 2 * 2 = ?</string>
+    <string name="question2">Столица Беларуси?</string>
+    <string name="question3">Топ за свои деньги?</string>
+    <string name="question4">Какая ОС принадлежит микромягким (Microsoft)?</string>
+    <string name="question5">Отец Люка Скайокера это?</string>
+    <string name="answer11">6</string>
+    <string name="answer12">8</string>
+    <string name="answer13">13</string>
+    <string name="answer14">2</string>
+    <string name="answer15">7</string>
+    <string name="answer21">Москва</string>
+    <string name="answer22">Минск</string>
+    <string name="answer23">Лондон</string>
+    <string name="answer24">Берлин</string>
+    <string name="answer25">Мухосранск</string>
+    <string name="answer31">Apple</string>
+    <string name="answer32">Samsung</string>
+    <string name="answer33">Xiaomi</string>
+    <string name="answer34">Nokia 3310</string>
+    <string name="answer35">Huawei</string>
+    <string name="answer41">Mac OS</string>
+    <string name="answer42">Android</string>
+    <string name="answer43">Vedroid</string>
+    <string name="answer44">Окна (Windows)</string>
+    <string name="answer45">Двери (Doors)</string>
+    <string name="answer51">Йода</string>
+    <string name="answer52">Мэйс Винду</string>
+    <string name="answer53">Гомер Симпсон</string>
+    <string name="answer54">Шрэк</string>
+    <string name="answer55">Дарт Вейдер</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
