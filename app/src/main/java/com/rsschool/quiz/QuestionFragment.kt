@@ -5,7 +5,9 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.rsschool.quiz.databinding.FragmentQuizBinding
@@ -121,7 +123,7 @@ class QuestionFragment : Fragment(){
 
         }
         binding.nextButton.setOnClickListener {
-            if (quizVM.currentQuestion <= 3) {
+            if (quizVM.currentQuestion <= QuestionsDataBase.questionList.size - 2) {
                 quizVM.currentQuestion++
                 transit.openQuizFragment()
             } else {
@@ -160,11 +162,11 @@ class QuestionFragment : Fragment(){
                 correctAnswersCount++
             }
         }
-        val questions = IntArray(QuestionsDataBase.questionList.size){-1} //создаем лист со всеми вопросами для того, чтобы потом имми можно было поделиться
+        val questions = IntArray(QuestionsDataBase.questionList.size){QuizViewModel.NO_ANSWER} //создаем лист со всеми вопросами для того, чтобы потом имми можно было поделиться
         for (i in QuestionsDataBase.questionList.indices) {
             questions[i] = (QuestionsDataBase.questionList[i].title)
         }
-        val answers = IntArray(QuestionsDataBase.questionList.size){-1}//arrayOf<Int>(QuestionsDataBase.questionList.size) //создаем лист со всеми ответами пользователя для того, чтобы потом имми можно было поделиться
+        val answers = IntArray(QuestionsDataBase.questionList.size){QuizViewModel.NO_ANSWER} //создаем лист со всеми ответами пользователя для того, чтобы потом имми можно было поделиться
         for (i in QuestionsDataBase.questionList.indices) {
             answers[i] = (QuestionsDataBase.questionList[i].answers[quizVM.answersList[i]]) //добавляем ответ пользователя, индекс которого находится в answersList
         }
