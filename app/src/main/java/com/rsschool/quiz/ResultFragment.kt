@@ -13,7 +13,7 @@ import java.lang.StringBuilder
 
 class ResultFragment : Fragment() {
 
-    private var _binding: FragmentResultBinding? = null
+private var _binding: FragmentResultBinding? = null
     private val binding get() = requireNotNull(_binding)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,8 +36,9 @@ class ResultFragment : Fragment() {
         val questions = arguments?.getIntArray(QUESTIONS)
         val answers = arguments?.getIntArray(ANSWERS)
 
+        val resultMessage = "Your result: $correctAnswersCount of $answersCount!"
+        binding.resultTv.text = resultMessage
 
-        binding.resultTv.text = "Ваш результат $correctAnswersCount из $answersCount!"
         binding.exitBtn.setOnClickListener{
             requireActivity().finish()
         }
@@ -46,7 +47,7 @@ class ResultFragment : Fragment() {
             transit.openCleanQuizFragment()
         }
 
-        val messageToShare = StringBuilder("QUIZ RESULT: $correctAnswersCount of $answersCount!\n")
+        val messageToShare = StringBuilder("$resultMessage\n")
         for(i in 0 until answersCount){
             messageToShare.append("${i+1}) ${resources.getString(questions?.get(i)?:0)} \n" +
                     " ${resources.getString(answers?.get(i) ?: 0)} \n")
@@ -55,10 +56,17 @@ class ResultFragment : Fragment() {
             val intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, messageToShare.toString())
+                putExtra(Intent.EXTRA_SUBJECT,"Quiz result")
+                putExtra(Intent.EXTRA_TEXT,messageToShare.toString())
+
             }
             startActivity(intent)
         }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     companion object {

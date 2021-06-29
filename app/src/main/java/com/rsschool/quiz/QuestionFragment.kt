@@ -30,8 +30,8 @@ class QuestionFragment : Fragment(){
                     }
                 })
         }
-
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,74 +62,47 @@ class QuestionFragment : Fragment(){
 
     private fun setTitle(){
         binding.toolbar.title = "Question ${quizVM.currentQuestion + 1}"
+        if(quizVM.currentQuestion != 0)
+            binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_chevron_left_24)
     }
 
     private fun setQuestion(){
-        binding.question.text = resources.getText(quizVM.questionList[quizVM.currentQuestion].title)
+        binding.question.text = resources.getText(QuestionsDataBase.questionList[quizVM.currentQuestion].title)
     }
 
     private fun setAnswers(){
-        binding.optionOne.text = resources.getText(quizVM.questionList[quizVM.currentQuestion].answers[0])
-        binding.optionTwo.text = resources.getText(quizVM.questionList[quizVM.currentQuestion].answers[1])
-        binding.optionThree.text = resources.getText(quizVM.questionList[quizVM.currentQuestion].answers[2])
-        binding.optionFour.text = resources.getText(quizVM.questionList[quizVM.currentQuestion].answers[3])
-        binding.optionFive.text = resources.getText(quizVM.questionList[quizVM.currentQuestion].answers[4])
+        binding.optionOne.text = resources.getText(QuestionsDataBase.questionList[quizVM.currentQuestion].answers[0])
+        binding.optionTwo.text = resources.getText(QuestionsDataBase.questionList[quizVM.currentQuestion].answers[1])
+        binding.optionThree.text = resources.getText(QuestionsDataBase.questionList[quizVM.currentQuestion].answers[2])
+        binding.optionFour.text = resources.getText(QuestionsDataBase.questionList[quizVM.currentQuestion].answers[3])
+        binding.optionFive.text = resources.getText(QuestionsDataBase.questionList[quizVM.currentQuestion].answers[4])
+
     }
 
     private fun setButtonsEnabled(){
-        if(quizVM.currentQuestion== 0){
-            binding.previousButton.isEnabled = false
-        }
-        else binding.previousButton.isEnabled = true
-
-
+        binding.previousButton.isEnabled = quizVM.currentQuestion != 0
         binding.nextButton.isEnabled = quizVM.answersList[quizVM.currentQuestion] != QuizViewModel.NO_ANSWER
 
         makeSubmitBtn()
     }
 
     private fun makeSubmitBtn(){
-        if(quizVM.currentQuestion == 4){
+        if(quizVM.currentQuestion == quizVM.answersList.size - 1){ //-1 because size start with 1 and index start with 0
             binding.nextButton.text = "Submit"
-            binding.nextButton.setOnClickListener {
-                val transit = requireActivity() as TransitToResults
-                var correctAnswersCount =
-                    0                     //считаем количество правильных ответов
-                for (i in 0 until quizVM.answersList.size) {
-                    if (quizVM.questionList[i].answers[quizVM.answersList[i]] == quizVM.questionList[i].correctAnswer) { //проверяем ответ пользователя, индекс которого находится в answersList
-                        correctAnswersCount++
-                    }
-                }
-                val questions = IntArray(quizVM.questionList.size){-1} //создаем лист со всеми вопросами для того, чтобы потом имми можно было поделиться
-                for (i in quizVM.questionList.indices) {
-                    questions[i] = (quizVM.questionList[i].title)
-                }
-                val answers = IntArray(quizVM.questionList.size){-1}//arrayOf<Int>(quizVM.questionList.size) //создаем лист со всеми ответами пользователя для того, чтобы потом имми можно было поделиться
-                for (i in quizVM.questionList.indices) {
-                    answers[i] = (quizVM.questionList[i].answers[quizVM.answersList[i]]) //добавляем ответ пользователя, индекс которого находится в answersList
-                }
-                transit.openResultsFragment(
-                    correctAnswersCount,
-                    quizVM.questionList.size,
-                    questions,
-                    answers
-                )
-            }
         }
     }
 
-    private fun setPastAnswer(){
-        if(quizVM.answersList[quizVM.currentQuestion] != QuizViewModel.NO_ANSWER){
-            when(quizVM.answersList[quizVM.currentQuestion]){
+    private fun setPastAnswer() {
+        if (quizVM.answersList[quizVM.currentQuestion] != QuizViewModel.NO_ANSWER) {
+            when (quizVM.answersList[quizVM.currentQuestion]) {
                 0 -> binding.optionOne.isChecked = true
                 1 -> binding.optionTwo.isChecked = true
                 2 -> binding.optionThree.isChecked = true
-                3 -> binding.optionFour.isChecked =  true
-                4 -> binding.optionFive.isChecked =  true
+                3 -> binding.optionFour.isChecked = true
+                4 -> binding.optionFive.isChecked = true
             }
         }
     }
-
 
     private fun setListeners(){
         val transit = activity as TransitInterface
@@ -148,8 +121,12 @@ class QuestionFragment : Fragment(){
 
         }
         binding.nextButton.setOnClickListener {
-            quizVM.currentQuestion++
-            transit.openQuizFragment()
+            if (quizVM.currentQuestion <= 3) {
+                quizVM.currentQuestion++
+                transit.openQuizFragment()
+            } else {
+                openResultFragment()
+            }
         }
         binding.previousButton.setOnClickListener {
             backClick()
@@ -173,6 +150,30 @@ class QuestionFragment : Fragment(){
         context?.theme?.resolveAttribute(R.attr.colorPrimaryDark, typedValue, true)
         val color = typedValue.data
         activity?.window?.statusBarColor = color
+    }
+
+    private fun openResultFragment(){
+        val transit = requireActivity() as TransitToResults
+        var correctAnswersCount = 0                  //считаем количество правильных ответов
+        for (i in 0 until quizVM.answersList.size) {
+            if (QuestionsDataBase.questionList[i].answers[quizVM.answersList[i]] == QuestionsDataBase.questionList[i].correctAnswer) { //проверяем ответ пользователя, индекс которого находится в answersList
+                correctAnswersCount++
+            }
+        }
+        val questions = IntArray(QuestionsDataBase.questionList.size){-1} //создаем лист со всеми вопросами для того, чтобы потом имми можно было поделиться
+        for (i in QuestionsDataBase.questionList.indices) {
+            questions[i] = (QuestionsDataBase.questionList[i].title)
+        }
+        val answers = IntArray(QuestionsDataBase.questionList.size){-1}//arrayOf<Int>(QuestionsDataBase.questionList.size) //создаем лист со всеми ответами пользователя для того, чтобы потом имми можно было поделиться
+        for (i in QuestionsDataBase.questionList.indices) {
+            answers[i] = (QuestionsDataBase.questionList[i].answers[quizVM.answersList[i]]) //добавляем ответ пользователя, индекс которого находится в answersList
+        }
+        transit.openResultsFragment(
+            correctAnswersCount,
+            QuestionsDataBase.questionList.size,
+            questions,
+            answers
+        )
     }
 
 

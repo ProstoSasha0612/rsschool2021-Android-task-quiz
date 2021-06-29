@@ -17,9 +17,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
             android:fitsSystemWindows="true"
             app:navigationContentDescription="Back to the previous question"
-            app:navigationIcon="@drawable/ic_baseline_chevron_left_24"
             app:title="Question 1" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -86,19 +86,19 @@
 
                 <RadioButton
                     android:id="@+id/option_one"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Option 1" />
 
                 <RadioButton
                     android:id="@+id/option_two"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="Option 2" />
 
                 <RadioButton
                     android:id="@+id/option_three"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="Option 3" />
 
@@ -111,7 +111,7 @@
 
                 <RadioButton
                     android:id="@+id/option_five"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="Option 5" />
 

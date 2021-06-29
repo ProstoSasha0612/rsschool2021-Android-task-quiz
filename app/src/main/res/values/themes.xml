@@ -3,6 +3,7 @@
         <item name="colorOnPrimary">@color/black</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Theme.Quiz.First" parent="Theme.Quiz">
@@ -26,7 +27,7 @@
     </style>
 
     <style name="Theme.Quiz.Third" parent="Theme.Quiz">
-        <item name="colorPrimary">#03a9f4</item>
+        <item name="colorPrimary">#40C0FA</item>
         <item name="colorPrimaryDark">#007ac1</item>
         <item name="colorPrimaryVariant">#67daff</item>
         <item name="colorSecondary">#42a5f5</item>
